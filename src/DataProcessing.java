@@ -89,8 +89,6 @@ static InformationOutput informationOutput = new InformationOutput();
         }
     }
 
-
-
     public void selectedStudent() {
 // ПРОПИСАТЬ УСЛОВИЕ ПРО 5 ВОПРОСОВ
         StudentMode studentMode = new StudentMode();
