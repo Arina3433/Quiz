@@ -1,6 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        LogInToTheSystem logInToTheSystem = new LogInToTheSystem();
-        logInToTheSystem.inputToSelectRoleSetValue();
+
+        QuestionsRepository questionsRepository = new QuestionsRepository();
+        DataProcessing dataProcessing = new DataProcessing();
+        InformationOutput informationOutput = new InformationOutput();
+
+        informationOutput.logInToTheSystemGreeting();
+        dataProcessing.inputToSelectRoleSetValue();
+
     }
 }
