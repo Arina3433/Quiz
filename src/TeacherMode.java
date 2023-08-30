@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class TeacherMode {
@@ -8,78 +10,132 @@ public class TeacherMode {
 
     public TeacherMode(ListRepository questionsRepository) {
         this.questionsRepository = questionsRepository;
-        System.out.println("Приветствуем, учитель! Выберете, что вы хотите сделать:");
+        TextOutput.logInToTheTeacherModeGreeting();
     }
 
     public void inputToSelectActionSetValue() {
         while (true) {
             try {
-                System.out.println("\tВведите \"1\" если хотите добавить вопрос " +
-                        "\n\tВведите \"2\" если хотите вывести на экран все вопросы из базы" +
-                        "\n\tВведите \"3\" если хотите выйти из приложения");
+                TextOutput.askForTeacherSelectAction();
                 this.inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     selectedAddQuestion();
                     askingForDesireToContinue();
                 } else if (inputToSelectAction == 2) {
-                    selectedDisplayAllQuestions();
+                    selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
                     askingForDesireToContinue();
                 } else if (inputToSelectAction == 3) {
                     System.exit(0);
                 } else
-                    System.out.println("Некорректный формат ввода, попробуйте еще раз");
+                    TextOutput.outputErrorMessage();
             } catch (Exception e) {
-                System.out.println("Некорректный формат ввода, попробуйте еще раз");
+                TextOutput.outputErrorMessage();
             }
         }
     }
 
     public void selectedAddQuestion() {
-        Question question = new Question();
+        while (true) {
+            Question question = new Question();
 
-        System.out.println("Введите вопрос, который хотите добавить:");
-        question.setText(new Scanner(System.in).nextLine());
+            LinkedList<String> answers = new LinkedList<>();
 
-        System.out.println("Введите варианты ответа:");
-        LinkedList<String> answers = new LinkedList<>();
-        for () {
-            answers.add(new Scanner(System.in).nextLine());
+            question.setText(acceptQuestionText());
+
+            question.setAnswers(acceptAnswerOptions(answers));
+
+            question.setCorrectAnswer(acceptNumberOfCorrectAnswer(answers));
+
+            questionsRepository.addQuestionToList(question);
+
+                try {
+                    TextOutput.askForDesireToContinueEnterQuestionText();
+                    this.inputToSelectAction = new Scanner(System.in).nextInt();
+                    if (inputToSelectAction == 1) {
+                        System.out.println("Следующий вопрос:");
+                    } else if (inputToSelectAction == 2) {
+                        break;
+                    } else
+                        TextOutput.outputErrorMessage();
+                } catch (Exception e) {
+                    TextOutput.outputErrorMessage();
+                }
         }
-        question.setAnswers(answers);
-        //добавляем правильный ответ
-        question.setCorrectAnswer(new Scanner(System.in).nextInt());
-
-        questionsRepository.addQuestionToList(question);
-
     }
 
-    public void selectedDisplayAllQuestions() {
-        System.out.println("Вывести на экран все вопросы из базы");
-        for (String el: questionsList) {
+    public String acceptQuestionText() {
+        System.out.println("Введите вопрос, который хотите добавить:");
+        String questionText = new Scanner(System.in).nextLine();
+
+        return questionText;
+    }
+
+    public LinkedList<String> acceptAnswerOptions(LinkedList<String> answers) {
+        System.out.println("Введите варианты ответа. Когда введете необходимое вам число ответов," +
+                "\nпропишите ключевое слово \"стоп\"");
+        while (true) {
             int i = 0;
-            i++;
-            System.out.println(i + "." + el);
+            String teacherScan = new Scanner(System.in).nextLine();
+            if (!Objects.equals(teacherScan, "стоп")) {
+                answers.add(teacherScan);
+                i++;
+            }
+            else if(Objects.equals(teacherScan, "стоп") && i == 1) {
+                System.out.println("Должно быть как минимум 2 варианта ответа на вопрос. Введите следующий:");
+            } else {
+                System.out.println("Вы ввели " + i + " ответов(а).");
+                break;
+            }
+        }
+
+        return answers;
+    }
+
+    public int acceptNumberOfCorrectAnswer(LinkedList<String> answers) {
+        int numberOfCorrectAnswer = 0;
+        while (true) {
+            System.out.println("Введите номер правильного ответа:");
+            try {
+                int scanNumberOfCorrectAnswer = new Scanner(System.in).nextInt();
+                if (scanNumberOfCorrectAnswer <= answers.size() && scanNumberOfCorrectAnswer > 0) {
+                    numberOfCorrectAnswer = scanNumberOfCorrectAnswer;
+                    break;
+                } else {
+                    TextOutput.outputErrorMessage();
+                }
+            } catch (Exception e) {
+                TextOutput.outputErrorMessage();
+                System.out.println("Error");
+            }
+        }
+
+        return numberOfCorrectAnswer;
+    }
+
+    public void selectedDisplayAllQuestions(ArrayList<Question> questionsList) {
+        System.out.println("В базе найдены следующие вопросы:");
+        for (int i = 0; i < questionsList.size(); i++) {
+            System.out.println(questionsList.get(i));
         }
     }
 
     public void askingForDesireToContinue() {
         while (true) {
             try {
-                System.out.println("\nЖелаете продолжить?" +
-                        "\n\tВведите \"1\" если хотите вернуться к списку действий" +
-                        "\n\tВведите \"2\" если хотите выйти из приложения");
+                TextOutput.askForDesireToContinueText();
                 this.inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
                     break;
-                }
-                else if (inputToSelectAction == 2) {
+                } else if (inputToSelectAction == 2) {
                     System.exit(0);
                 } else
-                    System.out.println("Некорректный формат ввода, попробуйте еще раз");
+                    TextOutput.outputErrorMessage();
             } catch (Exception e) {
-                System.out.println("Некорректный формат ввода, попробуйте еще раз");
+                TextOutput.outputErrorMessage();
             }
         }
     }
+
+
 }

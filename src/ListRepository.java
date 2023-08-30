@@ -4,8 +4,6 @@ public class ListRepository {
 
     private ArrayList<Question> questionsList;
 
-    //конструктор
-
     public void addQuestionToList(Question question) {
         questionsList.add(question);
     }
