@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class ListRepository {
 
-    private ArrayList<Question> questionsList;
+    private ArrayList<Question> questionsList = new ArrayList<>();
 
     public void addQuestionToList(Question question) {
         questionsList.add(question);

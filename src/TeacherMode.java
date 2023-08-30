@@ -48,18 +48,18 @@ public class TeacherMode {
 
             questionsRepository.addQuestionToList(question);
 
-                try {
-                    TextOutput.askForDesireToContinueEnterQuestionText();
-                    this.inputToSelectAction = new Scanner(System.in).nextInt();
-                    if (inputToSelectAction == 1) {
-                        System.out.println("Следующий вопрос:");
-                    } else if (inputToSelectAction == 2) {
-                        break;
-                    } else
-                        TextOutput.outputErrorMessage();
-                } catch (Exception e) {
+            try {
+                TextOutput.askForDesireToContinueEnterQuestionText();
+                this.inputToSelectAction = new Scanner(System.in).nextInt();
+                if (inputToSelectAction == 1) {
+                    System.out.println("Следующий вопрос:");
+                } else if (inputToSelectAction == 2) {
+                    break;
+                } else
                     TextOutput.outputErrorMessage();
-                }
+            } catch (Exception e) {
+                TextOutput.outputErrorMessage();
+            }
         }
     }
 
@@ -74,16 +74,13 @@ public class TeacherMode {
         System.out.println("Введите варианты ответа. Когда введете необходимое вам число ответов," +
                 "\nпропишите ключевое слово \"стоп\"");
         while (true) {
-            int i = 0;
             String teacherScan = new Scanner(System.in).nextLine();
             if (!Objects.equals(teacherScan, "стоп")) {
                 answers.add(teacherScan);
-                i++;
-            }
-            else if(Objects.equals(teacherScan, "стоп") && i == 1) {
+            } else if (Objects.equals(teacherScan, "стоп") && answers.size() < 2 ) {
                 System.out.println("Должно быть как минимум 2 варианта ответа на вопрос. Введите следующий:");
             } else {
-                System.out.println("Вы ввели " + i + " ответов(а).");
+                System.out.println("Вы ввели " + answers.size() + " ответов(а).");
                 break;
             }
         }
@@ -92,6 +89,7 @@ public class TeacherMode {
     }
 
     public int acceptNumberOfCorrectAnswer(LinkedList<String> answers) {
+
         int numberOfCorrectAnswer = 0;
         while (true) {
             System.out.println("Введите номер правильного ответа:");
@@ -117,6 +115,7 @@ public class TeacherMode {
         for (int i = 0; i < questionsList.size(); i++) {
             System.out.println(questionsList.get(i));
         }
+        System.out.println();
     }
 
     public void askingForDesireToContinue() {

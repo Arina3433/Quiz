@@ -22,7 +22,7 @@ public class TextOutput {
     }
 
     public static void askForDesireToContinueText() {
-        System.out.println("\nЖелаете продолжить?" +
+        System.out.println("Желаете продолжить?" +
                 "\n\tВведите \"1\" если хотите вернуться к списку действий" +
                 "\n\tВведите \"2\" если хотите выйти из приложения");
     }
@@ -34,7 +34,7 @@ public class TextOutput {
     }
 
     public static void askForDesireToContinueEnterQuestionText() {
-        System.out.println("\nХотите ввести еще один вопрос?" +
+        System.out.println("Хотите ввести еще один вопрос?" +
                 "\n\t\"1\" - да" +
                 "\n\t\"2\" - нет");
     }
