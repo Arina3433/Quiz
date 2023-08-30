@@ -4,10 +4,10 @@ import java.util.Scanner;
 public class TeacherMode {
 
     private int inputToSelectAction;
-    private LinkedList<String> questionsList;
+    private ListRepository questionsRepository;
 
-    public TeacherMode(LinkedList<String> questionsList) {
-        this.questionsList = questionsList;
+    public TeacherMode(ListRepository questionsRepository) {
+        this.questionsRepository = questionsRepository;
         System.out.println("Приветствуем, учитель! Выберете, что вы хотите сделать:");
     }
 
@@ -35,8 +35,22 @@ public class TeacherMode {
     }
 
     public void selectedAddQuestion() {
+        Question question = new Question();
+
         System.out.println("Введите вопрос, который хотите добавить:");
-        questionsList.add(new Scanner(System.in).nextLine());
+        question.setText(new Scanner(System.in).nextLine());
+
+        System.out.println("Введите варианты ответа:");
+        LinkedList<String> answers = new LinkedList<>();
+        for () {
+            answers.add(new Scanner(System.in).nextLine());
+        }
+        question.setAnswers(answers);
+        //добавляем правильный ответ
+        question.setCorrectAnswer(new Scanner(System.in).nextInt());
+
+        questionsRepository.addQuestionToList(question);
+
     }
 
     public void selectedDisplayAllQuestions() {

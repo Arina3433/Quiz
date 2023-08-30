@@ -4,9 +4,10 @@ import java.util.Scanner;
 public class LogInToTheSystem {
 
     private int inputToSelectRole;
-    private LinkedList<String> questionsList = new LinkedList<>();
+    private ListRepository questionsRepository;
 
-    public LogInToTheSystem() {
+    public LogInToTheSystem(ListRepository questionsRepository) {
+        this.questionsRepository = questionsRepository;
         System.out.println("Добро пожаловать в систему!\nПожалуйста, выберите как вы хотите войти:");
     }
 
@@ -33,7 +34,7 @@ public class LogInToTheSystem {
     }
 
     public void selectedTeacher () {
-        TeacherMode teacherMode = new TeacherMode(questionsList);
+        TeacherMode teacherMode = new TeacherMode(questionsRepository);
         teacherMode.inputToSelectActionSetValue();
     }
 
