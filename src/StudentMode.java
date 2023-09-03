@@ -42,7 +42,7 @@ public class StudentMode {
 
         outputOfQuestionsAndReceptionOfAnswers();
 
-        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5");
+        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
 
     public void creatingQuestionsForQuizList() {
