@@ -9,7 +9,7 @@ public class TextOutput {
     }
 
     public static void logInToTheStudentModeGreeting() {
-        System.out.println("Приветствуем, ученик! Вам доступен квиз из 5 вопросов");
+        System.out.println("Приветствуем, ученик! Вам доступен квиз из 5 вопросов\nГотовы начать?");
     }
 
     public static void askForRoleSelectionText() {
@@ -21,16 +21,11 @@ public class TextOutput {
         System.out.println("Некорректный формат ввода, попробуйте еще раз");
     }
 
-    public static void askForDesireToContinueText() {
-        System.out.println("Желаете продолжить?" +
-                "\n\tВведите \"1\" если хотите вернуться к списку действий" +
-                "\n\tВведите \"2\" если хотите выйти из приложения");
-    }
-
     public static void askForTeacherSelectAction() {
         System.out.println("\tВведите \"1\" если хотите добавить вопрос " +
                 "\n\tВведите \"2\" если хотите вывести на экран все вопросы из базы" +
-                "\n\tВведите \"3\" если хотите выйти из приложения");
+                "\n\tВведите \"3\" если хотите вернуться к выбору роли" +
+                "\n\tВведите \"4\" если хотите выйти из приложения");
     }
 
     public static void askForDesireToContinueEnterQuestionText() {
@@ -38,5 +33,24 @@ public class TextOutput {
                 "\n\t\"1\" - да" +
                 "\n\t\"2\" - нет");
     }
+
+    public static void denyStudentAccessText() {
+        System.out.println("В базе менее 5 вопросов, прохождение квиза на данный момент невозможно." +
+                "\nПовторите попытку позже");
+    }
+
+    public static void askingForReadyToStartText() {
+        System.out.println("\tВведите \"1\" если хотите приступить" +
+                "\n\tВведите \"2\" если хотите вернуться к выбору роли" +
+                "\n\tВведите \"3\" если хотите выйти из приложения");
+    }
+
+    public static void askForDesireToContinueText() {
+        System.out.println("Желаете продолжить?" +
+                "\n\tВведите \"1\" если хотите вернуться к списку действий" +
+                "\n\tВведите \"2\" если хотите вернуться к выбору роли" +
+                "\n\tВведите \"3\" если хотите выйти из приложения");
+    }
+
 
 }

@@ -1,7 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        ListRepository repository = new ListRepository();
-        LogInToTheSystem logInToTheSystem = new LogInToTheSystem(repository);
-        logInToTheSystem.inputToSelectRoleSetValue();
+        ListRepository questionsRepository = new ListRepository();
+        SelectRole selectRole = new SelectRole(questionsRepository);
+        TextOutput.logInToTheSystemGreeting();
+        selectRole.inputToSelectRoleSetValue();
     }
 }

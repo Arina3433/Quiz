@@ -3,7 +3,7 @@ import java.util.LinkedList;
 public class Question {
     private String text;
     private LinkedList<String> answers;
-    private int correctAnswer;
+    private int numberOfCorrectAnswer;
 
     public String getText() {
         return text;
@@ -21,16 +21,11 @@ public class Question {
         this.answers = answers;
     }
 
-    public int getCorrectAnswer() {
-        return correctAnswer;
+    public int getNumberOfCorrectAnswer() {
+        return numberOfCorrectAnswer;
     }
 
-    public void setCorrectAnswer(int correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-
-    @Override
-    public String toString() {
-        return text;
+    public void setNumberOfCorrectAnswer(int numberOfCorrectAnswer) {
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
     }
 }

@@ -1,14 +1,12 @@
-import java.util.LinkedList;
 import java.util.Scanner;
 
-public class LogInToTheSystem {
+public class SelectRole {
 
     private int inputToSelectRole;
     private ListRepository questionsRepository;
 
-    public LogInToTheSystem(ListRepository questionsRepository) {
+    public SelectRole(ListRepository questionsRepository) {
         this.questionsRepository = questionsRepository;
-        TextOutput.logInToTheSystemGreeting();
     }
 
     public void inputToSelectRoleSetValue() {
@@ -19,26 +17,30 @@ public class LogInToTheSystem {
                 if (inputToSelectRole == 1) {
                     selectedTeacher();
                     break;
-                }
-                else if (inputToSelectRole == 2) {
-                    selectedStudent();
-                    break;
-                }
-                else
+                } else if (inputToSelectRole == 2) {
+                    if (questionsRepository.getQuestionsList().size() >= 5) {
+                        selectedStudent();
+                        break;
+                    } else {
+                        TextOutput.denyStudentAccessText();
+                    }
+                } else
                     TextOutput.outputErrorMessage();
-                } catch (Exception e) {
+            } catch (Exception e) {
                 TextOutput.outputErrorMessage();
-                }
             }
+        }
     }
 
-    public void selectedTeacher () {
+    public void selectedTeacher() {
         TeacherMode teacherMode = new TeacherMode(questionsRepository);
         teacherMode.inputToSelectActionSetValue();
     }
 
-    public void selectedStudent () {
-// ПРОПИСАТЬ УСЛОВИЕ ПРО 5 ВОПРОСОВ
-        StudentMode studentMode = new StudentMode();
+    public void selectedStudent() {
+        StudentMode studentMode = new StudentMode(questionsRepository);
+        studentMode.askingForReadyToStart();
     }
+
+
 }

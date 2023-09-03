@@ -25,6 +25,9 @@ public class TeacherMode {
                     selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
                     askingForDesireToContinue();
                 } else if (inputToSelectAction == 3) {
+                    SelectRole selectRole = new SelectRole(questionsRepository);
+                    selectRole.inputToSelectRoleSetValue();
+                } else if (inputToSelectAction == 4) {
                     System.exit(0);
                 } else
                     TextOutput.outputErrorMessage();
@@ -35,6 +38,7 @@ public class TeacherMode {
     }
 
     public void selectedAddQuestion() {
+        loop:
         while (true) {
             Question question = new Question();
 
@@ -44,21 +48,25 @@ public class TeacherMode {
 
             question.setAnswers(acceptAnswerOptions(answers));
 
-            question.setCorrectAnswer(acceptNumberOfCorrectAnswer(answers));
+            question.setNumberOfCorrectAnswer(acceptNumberOfCorrectAnswer(answers));
 
             questionsRepository.addQuestionToList(question);
 
-            try {
-                TextOutput.askForDesireToContinueEnterQuestionText();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    System.out.println("Следующий вопрос:");
-                } else if (inputToSelectAction == 2) {
-                    break;
-                } else
+            while (true) {
+                try {
+                    System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
+                    TextOutput.askForDesireToContinueEnterQuestionText();
+                    this.inputToSelectAction = new Scanner(System.in).nextInt();
+                    if (inputToSelectAction == 1) {
+                        System.out.println("Следующий вопрос:");
+                        break;
+                    } else if (inputToSelectAction == 2) {
+                        break loop;
+                    } else
+                        TextOutput.outputErrorMessage();
+                } catch (Exception e) {
                     TextOutput.outputErrorMessage();
-            } catch (Exception e) {
-                TextOutput.outputErrorMessage();
+                }
             }
         }
     }
@@ -77,7 +85,7 @@ public class TeacherMode {
             String teacherScan = new Scanner(System.in).nextLine();
             if (!Objects.equals(teacherScan, "стоп")) {
                 answers.add(teacherScan);
-            } else if (Objects.equals(teacherScan, "стоп") && answers.size() < 2 ) {
+            } else if (Objects.equals(teacherScan, "стоп") && answers.size() < 2) {
                 System.out.println("Должно быть как минимум 2 варианта ответа на вопрос. Введите следующий:");
             } else {
                 System.out.println("Вы ввели " + answers.size() + " ответов(а).");
@@ -113,7 +121,7 @@ public class TeacherMode {
     public void selectedDisplayAllQuestions(ArrayList<Question> questionsList) {
         System.out.println("В базе найдены следующие вопросы:");
         for (int i = 0; i < questionsList.size(); i++) {
-            System.out.println(questionsList.get(i));
+            System.out.println((i + 1) + ". " + questionsList.get(i).getText());
         }
         System.out.println();
     }
@@ -122,11 +130,14 @@ public class TeacherMode {
         while (true) {
             try {
                 TextOutput.askForDesireToContinueText();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
+                inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
                     break;
                 } else if (inputToSelectAction == 2) {
+                    SelectRole selectRole = new SelectRole(questionsRepository);
+                    selectRole.inputToSelectRoleSetValue();
+                } else if (inputToSelectAction == 3) {
                     System.exit(0);
                 } else
                     TextOutput.outputErrorMessage();
@@ -135,6 +146,5 @@ public class TeacherMode {
             }
         }
     }
-
 
 }
