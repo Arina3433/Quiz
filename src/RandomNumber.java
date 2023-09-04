@@ -4,8 +4,7 @@ import java.util.Random;
 public class RandomNumber {
 
     private ListRepository questionsRepository;
-    private ArrayList<Integer> randomNumbers = new ArrayList<>() {
-    };
+    private ArrayList<Integer> randomNumbers = new ArrayList<>() {};
 
     public RandomNumber(ListRepository questionsRepository) {
         this.questionsRepository = questionsRepository;

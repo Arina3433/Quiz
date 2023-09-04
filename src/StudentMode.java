@@ -46,8 +46,8 @@ public class StudentMode {
     }
 
     public void creatingQuestionsForQuizList() {
+        RandomNumber randomNumberArray = new RandomNumber(questionsRepository);
         for (int i = 0; i < 5; i++) {
-            RandomNumber randomNumberArray = new RandomNumber(questionsRepository);
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
             questionsForQuizList.add(questionsRepository.getQuestionsList().get(numberOfRandomQuestion - 1));
         }
@@ -88,10 +88,11 @@ public class StudentMode {
     public void askingForDesireToContinue() {
         while (true) {
             try {
-                TextOutput.askForDesireToContinueText();
+                TextOutput.askForDesireToPassAnotherQuiz();
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
+                    pussQuiz();
                     break;
                 } else if (inputToSelectAction == 2) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
