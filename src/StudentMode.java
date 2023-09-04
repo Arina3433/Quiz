@@ -7,7 +7,8 @@ public class StudentMode {
     private int answerEnteredStudent;
     private int studentAssessment;
     private ListRepository questionsRepository;
-    private ArrayList<Question> questionsForQuizList = new ArrayList<>();
+    private RandomNumber randomNumberArray;
+    private ArrayList<Question> questionsForQuizList;
 
     public StudentMode(ListRepository questionsRepository) {
         TextOutput.logInToTheStudentModeGreeting();
@@ -46,7 +47,8 @@ public class StudentMode {
     }
 
     public void creatingQuestionsForQuizList() {
-        RandomNumber randomNumberArray = new RandomNumber(questionsRepository);
+        randomNumberArray = new RandomNumber(questionsRepository);
+        questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
             questionsForQuizList.add(questionsRepository.getQuestionsList().get(numberOfRandomQuestion - 1));
