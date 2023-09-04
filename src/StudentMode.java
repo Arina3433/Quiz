@@ -90,11 +90,10 @@ public class StudentMode {
     public void askingForDesireToContinue() {
         while (true) {
             try {
-                TextOutput.askForDesireToPassAnotherQuiz();
+                TextOutput.askForDesireToContinueText();
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
-                    pussQuiz();
                     break;
                 } else if (inputToSelectAction == 2) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
