@@ -21,12 +21,15 @@ public class TeacherMode {
                 if (inputToSelectAction == 1) {
                     selectedAddQuestion();
                     askingForDesireToContinue();
+                    break;
                 } else if (inputToSelectAction == 2) {
                     selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
                     askingForDesireToContinue();
+                    break;
                 } else if (inputToSelectAction == 3) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
                     selectRole.inputToSelectRoleSetValue();
+                    break;
                 } else if (inputToSelectAction == 4) {
                     System.exit(0);
                 } else
@@ -38,7 +41,6 @@ public class TeacherMode {
     }
 
     public void selectedAddQuestion() {
-        loop:
         while (true) {
             Question question = new Question();
 
@@ -52,21 +54,27 @@ public class TeacherMode {
 
             questionsRepository.addQuestionToList(question);
 
-            while (true) {
-                try {
-                    System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
-                    TextOutput.askForDesireToContinueEnterQuestionText();
-                    this.inputToSelectAction = new Scanner(System.in).nextInt();
-                    if (inputToSelectAction == 1) {
-                        System.out.println("Следующий вопрос:");
-                        break;
-                    } else if (inputToSelectAction == 2) {
-                        break loop;
-                    } else
-                        TextOutput.outputErrorMessage();
-                } catch (Exception e) {
+            askingForDesireToContinueEnterQuestion();
+        }
+    }
+
+    public void askingForDesireToContinueEnterQuestion() {
+        while (true) {
+            try {
+                System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
+                TextOutput.askForDesireToContinueEnterQuestionText();
+                this.inputToSelectAction = new Scanner(System.in).nextInt();
+                if (inputToSelectAction == 1) {
+                    System.out.println("Следующий вопрос:");
+                    selectedAddQuestion();
+                    break;
+                } else if (inputToSelectAction == 2) {
+                    inputToSelectActionSetValue();
+                    break;
+                } else
                     TextOutput.outputErrorMessage();
-                }
+            } catch (Exception e) {
+                TextOutput.outputErrorMessage();
             }
         }
     }
@@ -133,10 +141,12 @@ public class TeacherMode {
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
+                    inputToSelectActionSetValue();
                     break;
                 } else if (inputToSelectAction == 2) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
                     selectRole.inputToSelectRoleSetValue();
+                    break;
                 } else if (inputToSelectAction == 3) {
                     System.exit(0);
                 } else

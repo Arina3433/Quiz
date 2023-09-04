@@ -22,9 +22,11 @@ public class StudentMode {
                 if (inputToSelectAction == 1) {
                     pussQuiz();
                     askingForDesireToContinue();
+                    break;
                 } else if (inputToSelectAction == 2) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
                     selectRole.inputToSelectRoleSetValue();
+                    break;
                 } else if (inputToSelectAction == 3) {
                     System.exit(0);
                 } else
@@ -92,10 +94,12 @@ public class StudentMode {
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 if (inputToSelectAction == 1) {
                     System.out.println("Что вы хотите сделать:");
+                    askingForReadyToStart();
                     break;
                 } else if (inputToSelectAction == 2) {
                     SelectRole selectRole = new SelectRole(questionsRepository);
                     selectRole.inputToSelectRoleSetValue();
+                    break;
                 } else if (inputToSelectAction == 3) {
                     System.exit(0);
                 } else
