@@ -18,19 +18,21 @@ public class TeacherMode {
             try {
                 TextOutput.askForTeacherSelectAction();
                 this.inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    selectedAddQuestion();
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 2) {
-                    selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 3) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 4) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (inputToSelectAction) {
+                    case 1:
+                        selectedAddQuestion();
+                        askingForDesireToContinue();
+                    case 2:
+                        selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
+                        askingForDesireToContinue();
+                    case 3:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                    case 4:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }
@@ -57,13 +59,15 @@ public class TeacherMode {
                     System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
                     TextOutput.askForDesireToContinueEnterQuestionText();
                     this.inputToSelectAction = new Scanner(System.in).nextInt();
-                    if (inputToSelectAction == 1) {
-                        System.out.println("Следующий вопрос:");
-                        break;
-                    } else if (inputToSelectAction == 2) {
-                        break loop;
-                    } else
-                        TextOutput.outputErrorMessage();
+                    switch (inputToSelectAction) {
+                        case 1:
+                            System.out.println("Следующий вопрос:");
+                            break;
+                        case 2:
+                            break loop;
+                        default:
+                            TextOutput.outputErrorMessage();
+                    }
                 } catch (Exception e) {
                     TextOutput.outputErrorMessage();
                 }
@@ -131,16 +135,18 @@ public class TeacherMode {
             try {
                 TextOutput.askForDesireToContinueText();
                 inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    System.out.println("Что вы хотите сделать:");
-                    break;
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (inputToSelectAction) {
+                    case 1:
+                        System.out.println("Что вы хотите сделать:");
+                        break;
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }

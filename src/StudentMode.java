@@ -4,8 +4,6 @@ import java.util.Scanner;
 public class StudentMode {
 
     private int inputToSelectAction;
-    private int answerEnteredStudent;
-    private int studentAssessment;
     private ListRepository questionsRepository;
     private RandomNumber randomNumberArray;
     private ArrayList<Question> questionsForQuizList;
@@ -20,16 +18,18 @@ public class StudentMode {
             try {
                 TextOutput.askingForReadyToStartText();
                 this.inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    pussQuiz();
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (inputToSelectAction) {
+                    case 1:
+                        pussQuiz();
+                        askingForDesireToContinue();
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }
@@ -37,11 +37,11 @@ public class StudentMode {
     }
 
     public void pussQuiz() {
-        studentAssessment = 0;
+        int studentAssessment = 0;
 
         creatingQuestionsForQuizList();
 
-        outputOfQuestionsAndReceptionOfAnswers();
+        outputOfQuestionsAndReceptionOfAnswers(studentAssessment);
 
         System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
@@ -55,7 +55,9 @@ public class StudentMode {
         }
     }
 
-    public void outputOfQuestionsAndReceptionOfAnswers() {
+    public void outputOfQuestionsAndReceptionOfAnswers(int studentAssessment) {
+        int answerEnteredStudent;
+
         for (int i = 0; i < 5; i++) {
             System.out.println("Вопрос " + (i + 1) + ": " + questionsForQuizList.get(i).getText());
 
@@ -92,16 +94,18 @@ public class StudentMode {
             try {
                 TextOutput.askForDesireToContinueText();
                 inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    System.out.println("Что вы хотите сделать:");
-                    break;
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (inputToSelectAction) {
+                    case 1:
+                        System.out.println("Что вы хотите сделать:");
+                        break;
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }

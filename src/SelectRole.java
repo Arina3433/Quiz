@@ -14,18 +14,20 @@ public class SelectRole {
             try {
                 TextOutput.askForRoleSelectionText();
                 this.inputToSelectRole = new Scanner(System.in).nextInt();
-                if (inputToSelectRole == 1) {
-                    selectedTeacher();
-                    break;
-                } else if (inputToSelectRole == 2) {
-                    if (questionsRepository.getQuestionsList().size() >= 5) {
-                        selectedStudent();
+                switch (inputToSelectRole) {
+                    case 1:
+                        selectedTeacher();
                         break;
-                    } else {
-                        TextOutput.denyStudentAccessText();
-                    }
-                } else
-                    TextOutput.outputErrorMessage();
+                    case 2:
+                        if (questionsRepository.getQuestionsList().size() >= 5) {
+                            selectedStudent();
+                            break;
+                        } else {
+                            TextOutput.denyStudentAccessText();
+                        }
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }
