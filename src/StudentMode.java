@@ -21,7 +21,7 @@ public class StudentMode {
                 this.inputToSelectAction = new Scanner(System.in).nextInt();
                 switch (inputToSelectAction) {
                     case 1:
-                        pussQuiz();
+                        passQuiz();
                         askingForDesireToContinue();
                         break;
                     case 2:
@@ -39,7 +39,7 @@ public class StudentMode {
         }
     }
 
-    public void pussQuiz() {
+    public void passQuiz() {
         studentAssessment = 0;
 
         creatingQuestionsForQuizList();
@@ -100,7 +100,7 @@ public class StudentMode {
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 switch (inputToSelectAction) {
                     case 1:
-                        pussQuiz();
+                        passQuiz();
                         break;
                     case 2:
                         SelectRole selectRole = new SelectRole(questionsRepository);
