@@ -3,11 +3,7 @@ import java.util.Scanner;
 
 public class StudentMode {
 
-    private int inputToSelectAction;
-    private int studentAssessment = 0;
     private ListRepository questionsRepository;
-    private RandomNumber randomNumberArray;
-    private ArrayList<Question> questionsForQuizList;
 
     public StudentMode(ListRepository questionsRepository) {
         TextOutput.logInToTheStudentModeGreeting();
@@ -18,8 +14,7 @@ public class StudentMode {
         while (true) {
             try {
                 TextOutput.askingForReadyToStartText();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
-                switch (inputToSelectAction) {
+                switch (new Scanner(System.in).nextInt()) {
                     case 1:
                         passQuiz();
                         askingForDesireToContinue();
@@ -40,27 +35,28 @@ public class StudentMode {
     }
 
     public void passQuiz() {
-        studentAssessment = 0;
 
-        creatingQuestionsForQuizList();
-
-        outputOfQuestionsAndReceptionOfAnswers();
+        int studentAssessment = outputOfQuestionsAndReceptionOfAnswers();
 
         System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
 
-    public void creatingQuestionsForQuizList() {
-        randomNumberArray = new RandomNumber();
+    public ArrayList<Question> creatingQuestionsForQuizList() {
+        RandomNumber randomNumberArray = new RandomNumber();
         randomNumberArray.generateRandomNumber(questionsRepository.getQuestionsList().size());
-        questionsForQuizList = new ArrayList<>();
+        ArrayList<Question> questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
             questionsForQuizList.add(questionsRepository.getQuestionsList().get(numberOfRandomQuestion - 1));
         }
+        return questionsForQuizList;
     }
 
-    public void outputOfQuestionsAndReceptionOfAnswers() {
+    public int outputOfQuestionsAndReceptionOfAnswers() {
+
+        int studentAssessment = 0;
         int answerEnteredStudent;
+        ArrayList<Question> questionsForQuizList = creatingQuestionsForQuizList();
 
         for (int i = 0; i < 5; i++) {
             System.out.println("Вопрос " + (i + 1) + ": " + questionsForQuizList.get(i).getText());
@@ -91,14 +87,14 @@ public class StudentMode {
                 TextOutput.outputErrorMessage();
             }
         }
+        return studentAssessment;
     }
 
     public void askingForDesireToContinue() {
         while (true) {
             try {
                 TextOutput.askForDesireToPassAnotherQuiz();
-                inputToSelectAction = new Scanner(System.in).nextInt();
-                switch (inputToSelectAction) {
+                switch (new Scanner(System.in).nextInt()) {
                     case 1:
                         passQuiz();
                         break;

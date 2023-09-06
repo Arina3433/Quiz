@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class SelectRole {
 
-    private int inputToSelectRole;
     private ListRepository questionsRepository;
 
     public SelectRole(ListRepository questionsRepository) {
@@ -13,8 +12,7 @@ public class SelectRole {
         while (true) {
             try {
                 TextOutput.askForRoleSelectionText();
-                this.inputToSelectRole = new Scanner(System.in).nextInt();
-                switch (inputToSelectRole) {
+                switch (new Scanner(System.in).nextInt()) {
                     case 1:
                         selectedTeacher();
                         break;

@@ -3,8 +3,7 @@ import java.util.Random;
 
 public class RandomNumber {
 
-    private ArrayList<Integer> randomNumbers = new ArrayList<>() {
-    };
+    private ArrayList<Integer> randomNumbers = new ArrayList<>() {};
 
     public RandomNumber() {
     }

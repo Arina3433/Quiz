@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class TeacherMode {
 
-    private int inputToSelectAction;
     private ListRepository questionsRepository;
 
     public TeacherMode(ListRepository questionsRepository) {
@@ -17,8 +16,7 @@ public class TeacherMode {
         while (true) {
             try {
                 TextOutput.askForTeacherSelectAction();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
-                switch (inputToSelectAction) {
+                switch (new Scanner(System.in).nextInt()) {
                     case 1:
                         selectedAddQuestion();
                         askingForDesireToContinue();
@@ -62,8 +60,7 @@ public class TeacherMode {
                 try {
                     System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
                     TextOutput.askForDesireToContinueEnterQuestionText();
-                    this.inputToSelectAction = new Scanner(System.in).nextInt();
-                    switch (inputToSelectAction) {
+                    switch (new Scanner(System.in).nextInt()) {
                         case 1:
                             System.out.println("Следующий вопрос:");
                             break lowerLoop;
@@ -139,8 +136,7 @@ public class TeacherMode {
         while (true) {
             try {
                 TextOutput.askForDesireToContinueText();
-                inputToSelectAction = new Scanner(System.in).nextInt();
-                switch (inputToSelectAction) {
+                switch (new Scanner(System.in).nextInt()) {
                     case 1:
                         System.out.println("Что вы хотите сделать:");
                         break loop;
