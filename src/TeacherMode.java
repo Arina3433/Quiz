@@ -22,12 +22,15 @@ public class TeacherMode {
                     case 1:
                         selectedAddQuestion();
                         askingForDesireToContinue();
+                        break;
                     case 2:
                         selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
                         askingForDesireToContinue();
+                        break;
                     case 3:
                         SelectRole selectRole = new SelectRole(questionsRepository);
                         selectRole.inputToSelectRoleSetValue();
+                        break;
                     case 4:
                         System.exit(0);
                     default:
@@ -54,6 +57,7 @@ public class TeacherMode {
 
             questionsRepository.addQuestionToList(question);
 
+            lowerLoop:
             while (true) {
                 try {
                     System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
@@ -62,7 +66,7 @@ public class TeacherMode {
                     switch (inputToSelectAction) {
                         case 1:
                             System.out.println("Следующий вопрос:");
-                            break;
+                            break lowerLoop;
                         case 2:
                             break loop;
                         default:
@@ -131,6 +135,7 @@ public class TeacherMode {
     }
 
     public void askingForDesireToContinue() {
+        loop:
         while (true) {
             try {
                 TextOutput.askForDesireToContinueText();
@@ -138,10 +143,11 @@ public class TeacherMode {
                 switch (inputToSelectAction) {
                     case 1:
                         System.out.println("Что вы хотите сделать:");
-                        break;
+                        break loop;
                     case 2:
                         SelectRole selectRole = new SelectRole(questionsRepository);
                         selectRole.inputToSelectRoleSetValue();
+                        break;
                     case 3:
                         System.exit(0);
                     default:

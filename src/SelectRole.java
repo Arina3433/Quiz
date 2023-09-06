@@ -24,6 +24,7 @@ public class SelectRole {
                             break;
                         } else {
                             TextOutput.denyStudentAccessText();
+                            continue;
                         }
                     default:
                         TextOutput.outputErrorMessage();

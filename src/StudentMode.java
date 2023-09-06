@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class StudentMode {
 
     private int inputToSelectAction;
+    private int studentAssessment = 0;
     private ListRepository questionsRepository;
     private RandomNumber randomNumberArray;
     private ArrayList<Question> questionsForQuizList;
@@ -22,9 +23,11 @@ public class StudentMode {
                     case 1:
                         pussQuiz();
                         askingForDesireToContinue();
+                        break;
                     case 2:
                         SelectRole selectRole = new SelectRole(questionsRepository);
                         selectRole.inputToSelectRoleSetValue();
+                        break;
                     case 3:
                         System.exit(0);
                     default:
@@ -37,17 +40,18 @@ public class StudentMode {
     }
 
     public void pussQuiz() {
-        int studentAssessment = 0;
+        studentAssessment = 0;
 
         creatingQuestionsForQuizList();
 
-        outputOfQuestionsAndReceptionOfAnswers(studentAssessment);
+        outputOfQuestionsAndReceptionOfAnswers();
 
         System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
 
     public void creatingQuestionsForQuizList() {
-        randomNumberArray = new RandomNumber(questionsRepository);
+        randomNumberArray = new RandomNumber();
+        randomNumberArray.generateRandomNumber(questionsRepository.getQuestionsList().size());
         questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
@@ -55,7 +59,7 @@ public class StudentMode {
         }
     }
 
-    public void outputOfQuestionsAndReceptionOfAnswers(int studentAssessment) {
+    public void outputOfQuestionsAndReceptionOfAnswers() {
         int answerEnteredStudent;
 
         for (int i = 0; i < 5; i++) {
@@ -92,15 +96,16 @@ public class StudentMode {
     public void askingForDesireToContinue() {
         while (true) {
             try {
-                TextOutput.askForDesireToContinueText();
+                TextOutput.askForDesireToPassAnotherQuiz();
                 inputToSelectAction = new Scanner(System.in).nextInt();
                 switch (inputToSelectAction) {
                     case 1:
-                        System.out.println("Что вы хотите сделать:");
+                        pussQuiz();
                         break;
                     case 2:
                         SelectRole selectRole = new SelectRole(questionsRepository);
                         selectRole.inputToSelectRoleSetValue();
+                        break;
                     case 3:
                         System.exit(0);
                     default:
