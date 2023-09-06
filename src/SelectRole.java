@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class SelectRole {
 
-    private int inputToSelectRole;
     private ListRepository questionsRepository;
 
     public SelectRole(ListRepository questionsRepository) {
@@ -13,19 +12,21 @@ public class SelectRole {
         while (true) {
             try {
                 TextOutput.askForRoleSelectionText();
-                this.inputToSelectRole = new Scanner(System.in).nextInt();
-                if (inputToSelectRole == 1) {
-                    selectedTeacher();
-                    break;
-                } else if (inputToSelectRole == 2) {
-                    if (questionsRepository.getQuestionsList().size() >= 5) {
-                        selectedStudent();
+                switch (new Scanner(System.in).nextInt()) {
+                    case 1:
+                        selectedTeacher();
                         break;
-                    } else {
-                        TextOutput.denyStudentAccessText();
-                    }
-                } else
-                    TextOutput.outputErrorMessage();
+                    case 2:
+                        if (questionsRepository.getQuestionsList().size() >= 5) {
+                            selectedStudent();
+                            break;
+                        } else {
+                            TextOutput.denyStudentAccessText();
+                            continue;
+                        }
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }

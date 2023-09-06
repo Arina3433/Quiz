@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class TeacherMode {
 
-    private int inputToSelectAction;
     private ListRepository questionsRepository;
 
     public TeacherMode(ListRepository questionsRepository) {
@@ -17,20 +16,24 @@ public class TeacherMode {
         while (true) {
             try {
                 TextOutput.askForTeacherSelectAction();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    selectedAddQuestion();
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 2) {
-                    selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 3) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 4) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (new Scanner(System.in).nextInt()) {
+                    case 1:
+                        selectedAddQuestion();
+                        askingForDesireToContinue();
+                        break;
+                    case 2:
+                        selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
+                        askingForDesireToContinue();
+                        break;
+                    case 3:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                        break;
+                    case 4:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }
@@ -52,18 +55,20 @@ public class TeacherMode {
 
             questionsRepository.addQuestionToList(question);
 
+            lowerLoop:
             while (true) {
                 try {
                     System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
                     TextOutput.askForDesireToContinueEnterQuestionText();
-                    this.inputToSelectAction = new Scanner(System.in).nextInt();
-                    if (inputToSelectAction == 1) {
-                        System.out.println("Следующий вопрос:");
-                        break;
-                    } else if (inputToSelectAction == 2) {
-                        break loop;
-                    } else
-                        TextOutput.outputErrorMessage();
+                    switch (new Scanner(System.in).nextInt()) {
+                        case 1:
+                            System.out.println("Следующий вопрос:");
+                            break lowerLoop;
+                        case 2:
+                            break loop;
+                        default:
+                            TextOutput.outputErrorMessage();
+                    }
                 } catch (Exception e) {
                     TextOutput.outputErrorMessage();
                 }
@@ -127,20 +132,23 @@ public class TeacherMode {
     }
 
     public void askingForDesireToContinue() {
+        loop:
         while (true) {
             try {
                 TextOutput.askForDesireToContinueText();
-                inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    System.out.println("Что вы хотите сделать:");
-                    break;
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (new Scanner(System.in).nextInt()) {
+                    case 1:
+                        System.out.println("Что вы хотите сделать:");
+                        break loop;
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                        break;
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }

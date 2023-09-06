@@ -3,11 +3,7 @@ import java.util.Scanner;
 
 public class StudentMode {
 
-    private int inputToSelectAction;
-    private int answerEnteredStudent;
-    private int studentAssessment;
     private ListRepository questionsRepository;
-    private ArrayList<Question> questionsForQuizList = new ArrayList<>();
 
     public StudentMode(ListRepository questionsRepository) {
         TextOutput.logInToTheStudentModeGreeting();
@@ -18,42 +14,50 @@ public class StudentMode {
         while (true) {
             try {
                 TextOutput.askingForReadyToStartText();
-                this.inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    pussQuiz();
-                    askingForDesireToContinue();
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                switch (new Scanner(System.in).nextInt()) {
+                    case 1:
+                        passQuiz();
+                        askingForDesireToContinue();
+                        break;
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                        break;
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }
         }
     }
 
-    public void pussQuiz() {
-        studentAssessment = 0;
+    public void passQuiz() {
 
-        creatingQuestionsForQuizList();
-
-        outputOfQuestionsAndReceptionOfAnswers();
+        int studentAssessment = outputOfQuestionsAndReceptionOfAnswers();
 
         System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
 
-    public void creatingQuestionsForQuizList() {
+    public ArrayList<Question> creatingQuestionsForQuizList() {
+        RandomNumber randomNumberArray = new RandomNumber();
+        randomNumberArray.generateRandomNumber(questionsRepository.getQuestionsList().size());
+        ArrayList<Question> questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            RandomNumber randomNumberArray = new RandomNumber(questionsRepository);
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
             questionsForQuizList.add(questionsRepository.getQuestionsList().get(numberOfRandomQuestion - 1));
         }
+        return questionsForQuizList;
     }
 
-    public void outputOfQuestionsAndReceptionOfAnswers() {
+    public int outputOfQuestionsAndReceptionOfAnswers() {
+
+        int studentAssessment = 0;
+        int answerEnteredStudent;
+        ArrayList<Question> questionsForQuizList = creatingQuestionsForQuizList();
+
         for (int i = 0; i < 5; i++) {
             System.out.println("Вопрос " + (i + 1) + ": " + questionsForQuizList.get(i).getText());
 
@@ -83,23 +87,26 @@ public class StudentMode {
                 TextOutput.outputErrorMessage();
             }
         }
+        return studentAssessment;
     }
 
     public void askingForDesireToContinue() {
         while (true) {
             try {
-                TextOutput.askForDesireToContinueText();
-                inputToSelectAction = new Scanner(System.in).nextInt();
-                if (inputToSelectAction == 1) {
-                    System.out.println("Что вы хотите сделать:");
-                    break;
-                } else if (inputToSelectAction == 2) {
-                    SelectRole selectRole = new SelectRole(questionsRepository);
-                    selectRole.inputToSelectRoleSetValue();
-                } else if (inputToSelectAction == 3) {
-                    System.exit(0);
-                } else
-                    TextOutput.outputErrorMessage();
+                TextOutput.askForDesireToPassAnotherQuiz();
+                switch (new Scanner(System.in).nextInt()) {
+                    case 1:
+                        passQuiz();
+                        break;
+                    case 2:
+                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        selectRole.inputToSelectRoleSetValue();
+                        break;
+                    case 3:
+                        System.exit(0);
+                    default:
+                        TextOutput.outputErrorMessage();
+                }
             } catch (Exception e) {
                 TextOutput.outputErrorMessage();
             }

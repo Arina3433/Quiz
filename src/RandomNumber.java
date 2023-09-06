@@ -3,13 +3,9 @@ import java.util.Random;
 
 public class RandomNumber {
 
-    private ListRepository questionsRepository;
-    private ArrayList<Integer> randomNumbers = new ArrayList<>() {
-    };
+    private ArrayList<Integer> randomNumbers = new ArrayList<>() {};
 
-    public RandomNumber(ListRepository questionsRepository) {
-        this.questionsRepository = questionsRepository;
-        generateRandomNumber();
+    public RandomNumber() {
     }
 
     public ArrayList<Integer> getRandomNumbers() {
@@ -20,11 +16,11 @@ public class RandomNumber {
         this.randomNumbers = randomNumbers;
     }
 
-    public ArrayList<Integer> generateRandomNumber() {
+    public ArrayList<Integer> generateRandomNumber(int sizeOfQuestionsRepository) {
 
         for (int i = 0; i < 5; i++) {
             Random randNumber = new Random();
-            int newNumber = randNumber.nextInt(questionsRepository.getQuestionsList().size());
+            int newNumber = randNumber.nextInt(sizeOfQuestionsRepository);
 
             if (!randomNumbers.contains((newNumber + 1))) {
                 randomNumbers.add((newNumber + 1));
