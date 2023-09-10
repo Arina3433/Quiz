@@ -2,10 +2,7 @@ import java.util.Scanner;
 
 public class SelectRole {
 
-    private ListRepository questionsRepository;
-
-    public SelectRole(ListRepository questionsRepository) {
-        this.questionsRepository = questionsRepository;
+    public SelectRole() {
     }
 
     public void inputToSelectRoleSetValue() {
@@ -17,7 +14,7 @@ public class SelectRole {
                         selectedTeacher();
                         break;
                     case 2:
-                        if (questionsRepository.getQuestionsList().size() >= 5) {
+                        if (ListRepository.readQuestionsFromFile().size() >= 5) {
                             selectedStudent();
                             break;
                         } else {
@@ -34,12 +31,12 @@ public class SelectRole {
     }
 
     public void selectedTeacher() {
-        TeacherMode teacherMode = new TeacherMode(questionsRepository);
+        TeacherMode teacherMode = new TeacherMode();
         teacherMode.inputToSelectActionSetValue();
     }
 
     public void selectedStudent() {
-        StudentMode studentMode = new StudentMode(questionsRepository);
+        StudentMode studentMode = new StudentMode();
         studentMode.askingForReadyToStart();
     }
 

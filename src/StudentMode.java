@@ -2,12 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentMode {
-
-    private ListRepository questionsRepository;
-
-    public StudentMode(ListRepository questionsRepository) {
+    public StudentMode() {
         TextOutput.logInToTheStudentModeGreeting();
-        this.questionsRepository = questionsRepository;
     }
 
     public void askingForReadyToStart() {
@@ -20,7 +16,7 @@ public class StudentMode {
                         askingForDesireToContinue();
                         break;
                     case 2:
-                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        SelectRole selectRole = new SelectRole();
                         selectRole.inputToSelectRoleSetValue();
                         break;
                     case 3:
@@ -38,16 +34,16 @@ public class StudentMode {
 
         int studentAssessment = outputOfQuestionsAndReceptionOfAnswers();
 
-        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
+        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n\n");
     }
 
     public ArrayList<Question> creatingQuestionsForQuizList() {
         RandomNumber randomNumberArray = new RandomNumber();
-        randomNumberArray.generateRandomNumber(questionsRepository.getQuestionsList().size());
+        randomNumberArray.generateRandomNumber(ListRepository.readQuestionsFromFile().size());
         ArrayList<Question> questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
-            questionsForQuizList.add(questionsRepository.getQuestionsList().get(numberOfRandomQuestion - 1));
+            questionsForQuizList.add(ListRepository.readQuestionsFromFile().get(numberOfRandomQuestion - 1));
         }
         return questionsForQuizList;
     }
@@ -99,7 +95,7 @@ public class StudentMode {
                         passQuiz();
                         break;
                     case 2:
-                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        SelectRole selectRole = new SelectRole();
                         selectRole.inputToSelectRoleSetValue();
                         break;
                     case 3:

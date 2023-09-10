@@ -5,10 +5,7 @@ import java.util.Scanner;
 
 public class TeacherMode {
 
-    private ListRepository questionsRepository;
-
-    public TeacherMode(ListRepository questionsRepository) {
-        this.questionsRepository = questionsRepository;
+    public TeacherMode() {
         TextOutput.logInToTheTeacherModeGreeting();
     }
 
@@ -22,11 +19,11 @@ public class TeacherMode {
                         askingForDesireToContinue();
                         break;
                     case 2:
-                        selectedDisplayAllQuestions(questionsRepository.getQuestionsList());
+                        selectedDisplayAllQuestions();
                         askingForDesireToContinue();
                         break;
                     case 3:
-                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        SelectRole selectRole = new SelectRole();
                         selectRole.inputToSelectRoleSetValue();
                         break;
                     case 4:
@@ -53,12 +50,12 @@ public class TeacherMode {
 
             question.setNumberOfCorrectAnswer(acceptNumberOfCorrectAnswer(answers));
 
-            questionsRepository.addQuestionToList(question);
+            ListRepository.writeQuestionsToFile(question);
 
             lowerLoop:
             while (true) {
                 try {
-                    System.out.println("Вы ввели " + questionsRepository.getQuestionsList().size() + " вопрос(а/ов)");
+                    System.out.println("Вы ввели " + ListRepository.readQuestionsFromFile().size() + " вопрос(а/ов)");
                     TextOutput.askForDesireToContinueEnterQuestionText();
                     switch (new Scanner(System.in).nextInt()) {
                         case 1:
@@ -123,10 +120,10 @@ public class TeacherMode {
         return numberOfCorrectAnswer;
     }
 
-    public void selectedDisplayAllQuestions(ArrayList<Question> questionsList) {
+    public void selectedDisplayAllQuestions() {
         System.out.println("В базе найдены следующие вопросы:");
-        for (int i = 0; i < questionsList.size(); i++) {
-            System.out.println((i + 1) + ". " + questionsList.get(i).getText());
+        for (int i = 0; i < ListRepository.readQuestionsFromFile().size(); i++) {
+            System.out.println((i + 1) + ". " + ListRepository.readQuestionsFromFile().get(i).getText());
         }
         System.out.println();
     }
@@ -141,7 +138,7 @@ public class TeacherMode {
                         System.out.println("Что вы хотите сделать:");
                         break loop;
                     case 2:
-                        SelectRole selectRole = new SelectRole(questionsRepository);
+                        SelectRole selectRole = new SelectRole();
                         selectRole.inputToSelectRoleSetValue();
                         break;
                     case 3:
