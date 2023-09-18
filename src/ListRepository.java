@@ -1,56 +1,34 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListRepository {
 
-    private static File file = new File("QuestionRepository.txt");
+    private static File file = new File("QuestionRepository.json");
 
-    public static void writeQuestionsToFile(Question question) {
-        try {
-
-            FileOutputStream fileOutputStream = new FileOutputStream("QuestionRepository.txt", true);
-
-            if (file.length() == 0) {
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                objectOutputStream.writeObject(question);
-                objectOutputStream.close();
-
-            } else {
-                MyObjectOutputStream myObjectOutputStream = new MyObjectOutputStream(fileOutputStream);
-                myObjectOutputStream.writeObject(question);
-                myObjectOutputStream.close();
-            }
-
-            fileOutputStream.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static ArrayList<Question> readQuestionsFromFile() {
-        ArrayList<Question> questionsList = new ArrayList<>();
+    public static void writeQuestionsToFile(Question question) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<Question> questionList = new ArrayList<>();
 
         if (file.length() != 0) {
+            questionList = (ArrayList<Question>) mapper.readValue(file, new TypeReference<List<Question>>() {});
+        }
+        questionList.add(question);
+        mapper.writeValue(file, questionList);
+    }
 
-            try {
+    public static ArrayList<Question> readQuestionsFromFile() throws IOException {
+        ArrayList<Question> questionList = new ArrayList<>();
 
-                FileInputStream fileInputStream = new FileInputStream("QuestionRepository.txt");
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-                while (fileInputStream.available() != 0) {
-                    questionsList.add((Question) objectInputStream.readObject());
-                }
-
-                objectInputStream.close();
-                fileInputStream.close();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+        if (file.length() != 0) {
+            questionList = (ArrayList<Question>) new ObjectMapper().readValue(file, new TypeReference<List<Question>>() {});
         } else {
             System.out.println("Файл пуст");
         }
 
-        return questionsList;
+        return questionList;
     }
 }

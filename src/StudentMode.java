@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,14 +31,14 @@ public class StudentMode {
         }
     }
 
-    public void passQuiz() {
+    public void passQuiz() throws IOException {
 
         int studentAssessment = outputOfQuestionsAndReceptionOfAnswers();
 
         System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n\n");
     }
 
-    public ArrayList<Question> creatingQuestionsForQuizList() {
+    public ArrayList<Question> creatingQuestionsForQuizList() throws IOException {
         RandomNumber randomNumberArray = new RandomNumber();
         randomNumberArray.generateRandomNumber(ListRepository.readQuestionsFromFile().size());
         ArrayList<Question> questionsForQuizList = new ArrayList<>();
@@ -48,7 +49,7 @@ public class StudentMode {
         return questionsForQuizList;
     }
 
-    public int outputOfQuestionsAndReceptionOfAnswers() {
+    public int outputOfQuestionsAndReceptionOfAnswers() throws IOException {
 
         int studentAssessment = 0;
         int answerEnteredStudent;

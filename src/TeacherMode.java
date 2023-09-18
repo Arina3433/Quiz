@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class TeacherMode {
         }
     }
 
-    public void selectedAddQuestion() {
+    public void selectedAddQuestion() throws IOException {
         loop:
         while (true) {
             Question question = new Question();
@@ -119,7 +120,7 @@ public class TeacherMode {
         return numberOfCorrectAnswer;
     }
 
-    public void selectedDisplayAllQuestions() {
+    public void selectedDisplayAllQuestions() throws IOException {
         System.out.println("В базе найдены следующие вопросы:");
         for (int i = 0; i < ListRepository.readQuestionsFromFile().size(); i++) {
             System.out.println((i + 1) + ". " + ListRepository.readQuestionsFromFile().get(i).getText());
