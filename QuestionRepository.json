@@ -49,6 +49,14 @@
         "6"
       ],
       "numberOfCorrectAnswer": 1
+    },
+    {
+      "text": "7",
+      "answers": [
+        "7",
+        "7"
+      ],
+      "numberOfCorrectAnswer": 1
     }
   ]
 }

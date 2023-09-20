@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -33,9 +34,8 @@ public class ListRepository {
             ObjectNode objectNode = (ObjectNode) mapper.readTree(file);
             ArrayNode arrayNode = (ArrayNode) objectNode.get("questionList");
 
-            for (JsonNode el : arrayNode) {
-                questionList.add(mapper.convertValue(el, Question.class));
-            }
+            questionList = mapper.convertValue(arrayNode, new TypeReference<ArrayList<Question>>() {});
+
         } else {
             System.out.println("Файл пуст");
         }
