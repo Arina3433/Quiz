@@ -1,9 +1,10 @@
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListRepository {
 
@@ -11,20 +12,30 @@ public class ListRepository {
 
     public static void writeQuestionsToFile(Question question) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<Question> questionList = new ArrayList<>();
 
-        if (file.length() != 0) {
-            questionList = (ArrayList<Question>) mapper.readValue(file, new TypeReference<List<Question>>() {});
+        if (file.length() == 0) {
+            ObjectNode root = mapper.createObjectNode();
+            root.putArray("questionList");
+            mapper.writer().writeValue(file, root);
         }
-        questionList.add(question);
-        mapper.writeValue(file, questionList);
+        ObjectNode root = (ObjectNode) mapper.readTree(file);
+        ArrayNode questionList = (ArrayNode) root.get("questionList");
+        questionList.add(mapper.convertValue(question, JsonNode.class));
+        mapper.writer().writeValue(file, root);
     }
 
     public static ArrayList<Question> readQuestionsFromFile() throws IOException {
         ArrayList<Question> questionList = new ArrayList<>();
 
         if (file.length() != 0) {
-            questionList = (ArrayList<Question>) new ObjectMapper().readValue(file, new TypeReference<List<Question>>() {});
+
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode objectNode = (ObjectNode) mapper.readTree(file);
+            ArrayNode arrayNode = (ArrayNode) objectNode.get("questionList");
+
+            for (JsonNode el : arrayNode) {
+                questionList.add(mapper.convertValue(el, Question.class));
+            }
         } else {
             System.out.println("Файл пуст");
         }
