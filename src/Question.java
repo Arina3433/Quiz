@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -6,6 +8,7 @@ public class Question  implements Serializable {
     private LinkedList<String> answers;
     private int numberOfCorrectAnswer;
 
+    @JsonGetter("Текст вопроса")
     public String getText() {
         return text;
     }
@@ -14,6 +17,7 @@ public class Question  implements Serializable {
         this.text = text;
     }
 
+    @JsonGetter("Варианты ответов")
     public LinkedList<String> getAnswers() {
         return answers;
     }
@@ -22,6 +26,7 @@ public class Question  implements Serializable {
         this.answers = answers;
     }
 
+    @JsonGetter("Правильный ответ")
     public int getNumberOfCorrectAnswer() {
         return numberOfCorrectAnswer;
     }

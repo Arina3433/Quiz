@@ -76,7 +76,7 @@ public class ListRepository {
                         JsonNode fileJsonNode = mapper.readTree(file);
                         JsonNode arrayJsonNode = fileJsonNode.get("questionList");
                         ObjectNode objectNode = (ObjectNode) arrayJsonNode.get(numberOfQuestionToEditScan - 1);
-                        objectNode.put("text", newWordingOfQuestion);
+                        objectNode.put("Текст вопроса", newWordingOfQuestion);
                         mapper.writer().writeValue(file, fileJsonNode);
                     }
                     break;
@@ -96,22 +96,22 @@ public class ListRepository {
         while (true) {
             try {
                 System.out.println("Варианты ответов:");
-                for (int j = 0; j < ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").size(); j++) {
-                    System.out.print(ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").get(j) + "  ");
+                for (int j = 0; j < ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("Варианты ответов").size(); j++) {
+                    System.out.print(ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("Варианты ответов").get(j) + "  ");
                 }
                 System.out.println("\nНомер правильного ответа:\n" +
-                        ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("numberOfCorrectAnswer"));
+                        ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("Правильный ответ"));
                 System.out.println("Введите новый номер правильного ответа (если не хотите менять, просто нажмите Enter):");
                 String newNumberOfCorrectAnswer = new Scanner(System.in).nextLine();
                 if (!newNumberOfCorrectAnswer.equals("")) {
-                    if (parseInt(newNumberOfCorrectAnswer) <= ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").size()
+                    if (parseInt(newNumberOfCorrectAnswer) <= ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("Варианты ответов").size()
                             && parseInt(newNumberOfCorrectAnswer) > 0) {
 
                         ObjectMapper mapper = new ObjectMapper();
                         JsonNode fileJsonNode = mapper.readTree(file);
                         JsonNode arrayJsonNode = fileJsonNode.get("questionList");
                         ObjectNode objectNode = (ObjectNode) arrayJsonNode.get(numberOfQuestionToEditScan - 1);
-                        objectNode.put("numberOfCorrectAnswer", parseInt(newNumberOfCorrectAnswer));
+                        objectNode.put("Правильный ответ", parseInt(newNumberOfCorrectAnswer));
                         mapper.writer().writeValue(file, fileJsonNode);
                     } else {
                         TextOutput.outputErrorMessage();

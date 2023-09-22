@@ -35,7 +35,7 @@ public class StudentMode {
 
         int studentAssessment = outputOfQuestionsAndReceptionOfAnswers();
 
-        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n\n");
+        System.out.println("Вы прошли квиз! Ваш результат " + studentAssessment + "/5\n");
     }
 
     public ArrayList<Question> creatingQuestionsForQuizList() throws IOException {
