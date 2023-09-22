@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -27,20 +25,18 @@ public class ListRepository {
         ObjectNode root = (ObjectNode) mapper.readTree(file);
         ArrayNode questionList = (ArrayNode) root.get("questionList");
         questionList.add(mapper.convertValue(question, JsonNode.class));
+
         mapper.writer().writeValue(file, root);
     }
 
-    public static ArrayList<Question> readQuestionsFromFile() throws IOException {
-        ArrayList<Question> questionList = new ArrayList<>();
+    public static ArrayNode readQuestionsFromFile() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode questionList = mapper.createArrayNode();
 
         if (file.length() != 0) {
 
-            ObjectMapper mapper = new ObjectMapper();
             ObjectNode objectNode = (ObjectNode) mapper.readTree(file);
-            ArrayNode arrayNode = (ArrayNode) objectNode.get("questionList");
-
-            questionList = mapper.convertValue(arrayNode, new TypeReference<ArrayList<Question>>() {
-            });
+            questionList = (ArrayNode) objectNode.get("questionList");
 
         } else {
             System.out.println("Файл пуст");
@@ -49,12 +45,21 @@ public class ListRepository {
         return questionList;
     }
 
+    public static ArrayList<Question> getArrayListOfQuestions(ArrayNode questionArrayNodeList) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<Question> questionArrayList = mapper.convertValue(questionArrayNodeList, new TypeReference<ArrayList<Question>>() {
+        });
+
+        return questionArrayList;
+    }
+
     public static void editQuestionInFile() {
-        editNumberOfCorrectQuestion(editQuestionText());
+
+        editNumberOfCorrectQuestion(editQuestionTextAndReturnNumberOfQuestionToEdit());
         System.out.println("Изменения сохранены");
     }
 
-    public static int editQuestionText() {
+    public static int editQuestionTextAndReturnNumberOfQuestionToEdit() {
         int numberOfQuestionToEditScan;
         while (true) {
             try {
@@ -91,14 +96,15 @@ public class ListRepository {
         while (true) {
             try {
                 System.out.println("Варианты ответов:");
-                for (int j = 0; j < ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).getAnswers().size(); j++) {
-                    System.out.print(ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).getAnswers().get(j) + "  ");
+                for (int j = 0; j < ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").size(); j++) {
+                    System.out.print(ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").get(j) + "  ");
                 }
-                System.out.println("\nНомер правильного ответа:\n" + ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).getNumberOfCorrectAnswer());
+                System.out.println("\nНомер правильного ответа:\n" +
+                        ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("numberOfCorrectAnswer"));
                 System.out.println("Введите новый номер правильного ответа (если не хотите менять, просто нажмите Enter):");
                 String newNumberOfCorrectAnswer = new Scanner(System.in).nextLine();
                 if (!newNumberOfCorrectAnswer.equals("")) {
-                    if (parseInt(newNumberOfCorrectAnswer) <= ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).getAnswers().size()
+                    if (parseInt(newNumberOfCorrectAnswer) <= ListRepository.readQuestionsFromFile().get(numberOfQuestionToEditScan - 1).get("answers").size()
                             && parseInt(newNumberOfCorrectAnswer) > 0) {
 
                         ObjectMapper mapper = new ObjectMapper();

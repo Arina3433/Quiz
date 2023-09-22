@@ -44,7 +44,7 @@ public class StudentMode {
         ArrayList<Question> questionsForQuizList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             int numberOfRandomQuestion = randomNumberArray.getRandomNumbers().get(i);
-            questionsForQuizList.add(ListRepository.readQuestionsFromFile().get(numberOfRandomQuestion - 1));
+            questionsForQuizList.add(ListRepository.getArrayListOfQuestions(ListRepository.readQuestionsFromFile()).get(numberOfRandomQuestion - 1));
         }
         return questionsForQuizList;
     }

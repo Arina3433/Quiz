@@ -131,7 +131,7 @@ public class TeacherMode {
     public void selectedDisplayAllQuestions() throws IOException {
         System.out.println("В базе найдены следующие вопросы:");
         for (int i = 0; i < ListRepository.readQuestionsFromFile().size(); i++) {
-            System.out.println((i + 1) + ". " + ListRepository.readQuestionsFromFile().get(i).getText());
+            System.out.println((i + 1) + ". " + ListRepository.readQuestionsFromFile().get(i).get("text"));
         }
         System.out.println();
     }
