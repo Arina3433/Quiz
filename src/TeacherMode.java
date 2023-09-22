@@ -23,10 +23,18 @@ public class TeacherMode {
                         askingForDesireToContinue();
                         break;
                     case 3:
+                        selectedEditQuestion();
+                        askingForDesireToContinue();
+                        break;
+                    case 4:
+                        selectedDeleteQuestion();
+                        askingForDesireToContinue();
+                        break;
+                    case 5:
                         SelectRole selectRole = new SelectRole();
                         selectRole.inputToSelectRoleSetValue();
                         break;
-                    case 4:
+                    case 6:
                         System.exit(0);
                     default:
                         TextOutput.outputErrorMessage();
@@ -126,6 +134,17 @@ public class TeacherMode {
             System.out.println((i + 1) + ". " + ListRepository.readQuestionsFromFile().get(i).getText());
         }
         System.out.println();
+    }
+
+    public void selectedEditQuestion() throws IOException {
+        selectedDisplayAllQuestions();
+        ListRepository.editQuestionInFile();
+    }
+
+    public void selectedDeleteQuestion() throws IOException {
+        selectedDisplayAllQuestions();
+        ListRepository.deleteQuestionFromFile();
+
     }
 
     public void askingForDesireToContinue() {
